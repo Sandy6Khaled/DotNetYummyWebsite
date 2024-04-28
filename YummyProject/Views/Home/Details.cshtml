@@ -1,0 +1,48 @@
+﻿@model YummyProject.Models.Meal
+
+@{
+    ViewData["Title"] = "Details";
+    List<MealIngredient> mealIng = ViewBag.Ing;
+}
+
+<h1>Details</h1>
+
+
+<div class="container w-75" id="searchContainer"></div>
+<main class="min-vh-100 position-relative">
+    @* <div class="inner-loading-screen top-0 start-0 end-0 bottom-0 justify-content-center align-items-center">
+    <i class="fa fa-spinner fa-spin fa-5x"></i>
+    </div> *@
+    <div class="container">
+        <div class="row py-5 g-4" id="foodRow">
+            <div class="col-md-4">
+                <img class="w-100 rounded-3" src="@Model.strMealThumb" alt="">
+                <h2>@Model.strMeal</h2>
+            </div>
+            <div class="col-md-8">
+                <h2>Instructions</h2>
+                <p>@Model.strInstructions</p>
+                <h3><span class="fw-bolder">Area : </span>@Model.Area.strArea</h3>
+                <h3><span class="fw-bolder">Category : </span>@Model.Category.strCategory</h3>
+                <h3>Recipes :</h3>
+                <ul class="list-unstyled d-flex g-3 flex-wrap">
+                    @foreach(var ing in mealIng)
+                    {
+                        <li class="alert alert-info m-2 p-1">
+                            @ing.Measure
+                            @ing.Ingredient.strIngredient
+                        </li>
+                    }
+                </ul>
+
+                <h3>Tags :</h3>
+                <ul class="list-unstyled d-flex g-3 flex-wrap">
+                    <li class="alert alert-danger m-2 p-1">@Model.strTags</li>
+                </ul>
+
+                <a target="_blank" href="@Model.strSource" class="btn btn-success">Source</a>
+                <a target="_blank" href="@Model.strYoutube" class="btn btn-danger">Youtube</a>
+            </div>
+        </div>
+    </div>
+</main>

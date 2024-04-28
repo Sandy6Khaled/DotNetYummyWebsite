@@ -1,0 +1,16 @@
+﻿@model List<Ingredient>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" action="@Url.Action("Ingredients","Home")">
+    @foreach(var ing in Model)
+    {
+        <input type="checkbox" name="ingfrm" value="@ing.Id" data-strIngredient="@ing.strIngredient" />
+        <label for="ingfrm">@ing.strIngredient</label>
+        <br />
+    }
+    <br />
+        <input type="submit" class="btn btn-success"/>
+</form>
