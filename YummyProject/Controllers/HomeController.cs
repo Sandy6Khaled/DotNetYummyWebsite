@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Versioning;
 using System.Diagnostics;
 using YummyProject.Models;
+using YummyProject.Repositories.Classes;
 using YummyProject.Repositories.Interfaces;
+using YummyProject.ViewModels;
 
 namespace YummyProject.Controllers
 {
@@ -12,7 +15,6 @@ namespace YummyProject.Controllers
         private readonly ICategoryRepo _categoryRepo;
         private readonly IMealIngredientRepo _mealIngredientRepo;
         private readonly IIngredientRepo _ingredientRepo;
-
         public HomeController(ILogger<HomeController> logger,IMealRepo mealRepo,ICategoryRepo categoryRepo, IMealIngredientRepo mealIngredientRepo,IIngredientRepo ingredientRepo)
         {
             _logger = logger;
@@ -25,6 +27,8 @@ namespace YummyProject.Controllers
         public IActionResult Index()
         {
             var Meals = _mealRepo.GetMeals();
+            ViewBag.ProductCategories = _categoryRepo.GetCategories();
+
             return View(Meals);
         }
 
@@ -61,6 +65,27 @@ namespace YummyProject.Controllers
         {
             var Meals = _mealRepo.GetMealsOnCategory(id);
             return View(Meals);
+        }
+        //[HttpPost]
+        public IActionResult SearchMeals(string search, int? category)
+        {
+            var filteredProducts = _mealRepo.GetMealsStartingWith(search);
+
+            if (category.HasValue && category.Value != 0) // Assuming 0 represents "All Categories"
+            {
+                filteredProducts = filteredProducts.Where(p => p.CategoryId == category.Value).ToList();
+            }
+            var viewModel = new MealViewModel
+            {
+                Meals = filteredProducts,
+                Categories = _categoryRepo.GetCategories(),
+
+            };
+
+            ViewBag.MealCategories = _categoryRepo.GetCategories();
+            ViewBag.SelectedCategoryId = category;
+            ViewBag.SearchInput = search;
+            return View(viewModel);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

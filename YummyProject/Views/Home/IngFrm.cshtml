@@ -4,13 +4,47 @@
 *@
 @{
 }
-<form method="post" action="@Url.Action("Ingredients","Home")">
-    @foreach(var ing in Model)
-    {
-        <input type="checkbox" name="ingfrm" value="@ing.Id" data-strIngredient="@ing.strIngredient" />
-        <label for="ingfrm">@ing.strIngredient</label>
-        <br />
+
+@{
+    var numberOfColumns = 3; // Set the number of columns
+    var ingredientsPerColumn = (int)Math.Ceiling((double)Model.Count / numberOfColumns);
+}
+
+<style>
+    .form-checkbox {
+        margin-bottom: 5px;
     }
-    <br />
-        <input type="submit" class="btn btn-success"/>
-</form>
+
+    .form-submit {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <form method="post" action="@Url.Action("Ingredients","Home")">
+        <div class="row">
+            @for (int i = 0; i < numberOfColumns; i++)
+            {
+                <div class="col-md-@(12 / numberOfColumns)">
+                    @for (int j = 0; j < ingredientsPerColumn; j++)
+                    {
+                        var index = i * ingredientsPerColumn + j;
+                        if (index < Model.Count)
+                        {
+                            var ing = Model[index];
+                            <div>
+                                <input type="checkbox" class="form-checkbox" name="ingfrm" value="@ing.Id" data-strIngredient="@ing.strIngredient" />
+                                <label for="ingfrm">@ing.strIngredient</label>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+        <div class="row  justify-content-end">
+            <div class="col-4 text-end">
+                <input type="submit" class="btn btn-success form-submit" />
+            </div>
+        </div>
+    </form>
+</div>

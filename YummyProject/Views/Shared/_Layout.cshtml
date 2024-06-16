@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    var selectedCategoryId = ViewBag.SelectedCategoryId ?? 0; // Default value if not set
+
+    var Categories = ViewBag.ProductCategories;
+}
+@inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,10 +15,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/YummyProject.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 overflow-hidden">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">YummyProject</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,8 +37,42 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="IngFrm">Ingredients</a>
                         </li>
+                        @if (!_signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <p class="nav-link text-dark">@User.Identity.Name</p>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <div class="search-bar-top">
+                                <div class="search-bar">
+                                    <form asp-controller="Home" asp-action="SearchMeals" method="get">
+                                        <div class="search-bar">
+
+                                            <input id="searchInput" class="form-control-sm" type="search" placeholder="Search Meals Here....." name="search" value="@ViewBag.SearchInput">
+                                            <button type="submit" class="btn btn-outline-success">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </li>
                     </ul>
                 </div>
+
+
             </div>
         </nav>
     </header>
@@ -38,11 +81,10 @@
             @RenderBody()
         </main>
     </div>
-
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - YummyProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    @*  <footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2024 - YummyProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
     </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

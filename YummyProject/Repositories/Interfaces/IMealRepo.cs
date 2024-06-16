@@ -10,5 +10,7 @@ namespace YummyProject.Repositories.Interfaces
         public List<Meal> GetMealsByFirstLetter(char firstChar);
         public List<Meal> GetMealsOnArea(string areaName);
         public List<Meal> GetMealsOnCategory(int CategoryId);
+        public List<Meal> GetMealsStartingWith(string search);
+
     }
 }

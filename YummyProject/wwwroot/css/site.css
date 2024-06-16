@@ -75,3 +75,80 @@ i {
     background-color: #0D0D0D;
     display: flex;
 }*/
+
+.header .search-top {
+    display: none;
+}
+
+    .header .search-top a {
+        font-size: 17px;
+    }
+
+        .header .search-top a:hover {
+            color: #F7941D;
+        }
+
+.header .search-form {
+    position: absolute;
+    left: -128px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    top: 46px;
+    background: #ffffff75;
+    padding: 7px;
+    border-radius: 5px;
+    transform: scaleY(0);
+    box-shadow: 0px 4px 7px #0000003b;
+    padding: 0;
+    border-radius: 0;
+}
+
+.header .search-top.active .search-form {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+.header .search-form input {
+    width: 220px;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 60px 0 15px;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    border-radius: 3px;
+    border: none;
+    background: #fff;
+    color: #333;
+    border-radius: 0;
+}
+
+.header .search-form button {
+    position: absolute;
+    right: 0;
+    height: 45px;
+    top: 0;
+    width: 45px;
+    background: transparent;
+    border: none;
+    color: #3353ea;
+    border-radius: 0 3px 3px 0;
+    border-radius: 0;
+    border-left: 1px solid #eee;
+    font-size: 15px;
+    color: #333;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+    .header .search-form button:hover {
+        color: #fff;
+        background: #F7941D;
+        border-color: transparent;
+    }

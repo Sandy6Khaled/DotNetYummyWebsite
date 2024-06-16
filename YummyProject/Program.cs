@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using YummyProject.Contexts;
+using YummyProject.Models;
 using YummyProject.Repositories.Classes;
 using YummyProject.Repositories.Interfaces;
+
 
 namespace YummyProject
 {
@@ -23,6 +27,9 @@ namespace YummyProject
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IMealIngredientRepo, MealIngredientRepo>();
             builder.Services.AddScoped<IIngredientRepo,  IngredientRepo>();
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
+            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<YummyContext>();
+
 
             var app = builder.Build();
 
