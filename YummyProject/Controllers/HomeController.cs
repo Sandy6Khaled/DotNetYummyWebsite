@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Versioning;
 using System.Diagnostics;
@@ -31,18 +32,19 @@ namespace YummyProject.Controllers
 
             return View(Meals);
         }
-
+        [Authorize]
         public IActionResult Privacy()
         {
             var Categories =_categoryRepo.GetCategories();
             return View(Categories);
         }
-
+        [Authorize]
         public IActionResult IngFrm()
         {
             List<Ingredient> ing = _ingredientRepo.GetAll();
             return View(ing);
         }
+        [Authorize]
         public IActionResult Ingredients(List<int> ingfrm)
         {
             List<Ingredient> ing = new List<Ingredient> ();
@@ -55,12 +57,14 @@ namespace YummyProject.Controllers
             var meals = _mealIngredientRepo.GetMealsWithIngredients(ing);
             return View(meals);
         }
+        [Authorize]
         public IActionResult Details(int id)
         {
             var Meal = _mealRepo.GetMealById(id);
             ViewBag.Ing = _mealIngredientRepo.GetMealIngredients(id);
             return View(Meal);
         }
+        [Authorize]
         public IActionResult GetMealsInCategories(int id)
         {
             var Meals = _mealRepo.GetMealsOnCategory(id);
