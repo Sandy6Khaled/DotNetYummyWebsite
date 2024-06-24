@@ -15,7 +15,7 @@ namespace YummyProject.Models
         public string LastName { get; set; }
 
         public string? Image { get; set; }
-        public List<AppUserRole> UserRoles { get; set; }
+        public List<AppUserRole> UserRoles { get; set; } //Navigation Property
 
     }
 }
